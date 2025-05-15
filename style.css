@@ -11,6 +11,8 @@
 /* 공통 스타일 */
 body {
     background-color: #e0f3ff;
+    font-family: 'Arial', sans-serif, 'Malgun Gothic', '맑은 고딕', '돋움';
+    color: #333;
 }
 
 /* 브금 on/off 버튼 */
