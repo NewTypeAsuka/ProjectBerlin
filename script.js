@@ -1,7 +1,9 @@
-
 // 변수
-const gachaOnceBtn = document.getElementById("gacha-once-btn");
-const gachaTenBtn = document.getElementById("gacha-ten-btn");
+let gachaMode = "normal"; // 최상단 고정
+let lastGachaResult = []; // 최상단 고정
+let currentIndex = 0;     // 최상단 고정
+const gachaCommonBtn = document.getElementById("gacha-common-btn");
+const gachaFesBtn = document.getElementById("gacha-fes-btn");
 const bgm = document.getElementById("bgm");
 const soundToggleBtn = document.getElementById("sound-toggle-btn");
 const aronaMessage = document.getElementById("arona-message");
@@ -11,10 +13,13 @@ const fireworksContainer = document.getElementById("fireworks-container");
 
 // 브금 컨트롤 버튼 핸들러
 document.addEventListener("DOMContentLoaded", () => {
-    bgm.volume = 0.5; // 초기 볼륨 설정
+    bgm.volume = 0.1; // 초기 볼륨 설정
     if (bgm.paused) {
         soundToggleBtn.textContent = "🔇";
     }
+    document.getElementById("step-three-page").addEventListener("click", () => {
+        startCharacterReveal(lastGachaResult);
+    });
 });
 soundToggleBtn.addEventListener("click", () => {
     if (bgm.paused) {
@@ -41,12 +46,12 @@ function changeScreen(targetId) {
 
 // 아로나 랜덤 메시지
 const aronaQuotes = [
-    "안녕하세요! 오늘도 가챠 운이 좋길 바랄게요!",
+    "안녕하세요! 가챠 운이 좋길 바랄게요!",
     "어서 오세요! 준비되셨나요?",
     "희망은 항상 가까이에 있어요!",
     "이번엔 꼭 3성이 나올 거예요!",
     "오늘은 왠지 좋은 예감이 들어요!",
-    "아로나가 당신의 3성을 응원하고 있어요!"
+    "아로나가 3성을 응원하고 있어요!"
 ];
 
 function updateAronaMessage() {
@@ -57,11 +62,11 @@ function updateAronaMessage() {
 setInterval(updateAronaMessage, 5000); // 5초마다 메시지 변경
 
 // 가챠 방식 버튼 핸들러(1회, 10회)
-gachaOnceBtn.addEventListener("click", () => {
+gachaCommonBtn.addEventListener("click", () => {
     // 나중에 필요한 로직 삽입 가능 (1회 뽑기 설정 등)
     changeScreen("step-two-page");
 });
-gachaTenBtn.addEventListener("click", () => {
+gachaFesBtn.addEventListener("click", () => {
     // 나중에 필요한 로직 삽입 가능 (10회 뽑기 설정 등)
     changeScreen("step-two-page");
 });
@@ -128,7 +133,10 @@ function triggerSignComplete() {
 
     // 1.5초 뒤 다음 화면으로 전환
     setTimeout(() => {
+        lastGachaResult = getGachaResult(gachaMode);
+        renderGachaResult(lastGachaResult); // 가림막 카드 표시
         changeScreen("step-three-page");
+
         fireworksContainer.innerHTML = "";
         fireworksContainer.classList.remove("playing");
         fireworksContainer.classList.add("hidden");
@@ -172,3 +180,61 @@ function triggerFlash() {
     document.body.appendChild(flash);
     setTimeout(() => flash.remove(), 300);
 }
+
+// 가챠 - 가림막 카드 렌더링
+function renderGachaResult(cards) {
+    const container = document.getElementById("gacha-result-grid");
+    container.innerHTML = "";
+
+    cards.forEach(card => {
+        const cardElement = document.createElement("div");
+        cardElement.classList.add("gacha-card", `rarity-${card.rarity}`);
+        cardElement.textContent = "???"; // 카드 가림막 표시
+
+        container.appendChild(cardElement);
+    });
+}
+
+let gachaResults = []; // step-three에서 넘겨받은 결과
+
+function startCharacterReveal(results) {
+    gachaResults = results;
+    currentIndex = 0;
+
+    const fireworksContainer = document.querySelector("#step-four-page .fireworks");
+    fireworksContainer.classList.remove("hidden");
+    fireworksContainer.classList.add("playing");
+    launchFireworks();
+
+    setTimeout(() => {
+        fireworksContainer.classList.remove("playing");
+        fireworksContainer.classList.add("hidden");
+
+        showNextCharacter(); // 첫 캐릭터 보여줌
+        changeScreen("step-four-page");
+    }, 1500);
+}
+
+function showNextCharacter() {
+    const card = gachaResults[currentIndex];
+    const img = document.getElementById("character-image");
+    const stars = document.getElementById("character-stars");
+
+    img.src = `images/characters/${card.rarity}/${card.image}`;
+    img.classList.remove("enter");
+    void img.offsetWidth; // 리렌더 트릭
+    img.classList.add("enter");
+
+    stars.innerHTML = "★".repeat(Number(card.rarity));
+}
+
+// 카드 클릭 → 다음 카드 or 결과 페이지
+document.getElementById("step-four-page").addEventListener("click", () => {
+    currentIndex++;
+    if (currentIndex < gachaResults.length) {
+        showNextCharacter();
+    } else {
+        changeScreen("step-five-page");
+    }
+});
+

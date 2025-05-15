@@ -32,14 +32,14 @@
             <div class="arona-container">
                 <img src="images/common/Arona.jpg" alt="Arona" class="arona-image" />
                 <div class="speech-bubble" id="arona-message">
-                    안녕하세요! 오늘도 가챠 운이 좋길 바랄게요!
+                    안녕하세요! 가챠 운이 좋길 바랄게요!
                 </div>
             </div>
             <h1 class="intro-title">🎯 가챠 방식 선택 🎯</h1>
             <p class="intro-subtitle">아래 버튼 중 하나를 선택하세요</p>
             <div class="gacha-button-group">
-                <button id="gacha-once-btn" class="gacha-button">1회 뽑기</button>
-                <button id="gacha-ten-btn" class="gacha-button">10회 뽑기</button>
+                <button id="gacha-common-btn" class="gacha-button">일반 가챠</button>
+                <button id="gacha-fes-btn" class="gacha-button">페스 가챠</button>
             </div>
         </div>
     </section>
@@ -55,17 +55,28 @@
 
     <!-- 3. 가챠 페이지 -->
     <section id="step-three-page" class="screen">
+        <div class="gacha-result-container">
+            <div class="card-grid" id="gacha-result-grid">
+                <!-- 카드 10개가 JS로 여기에 삽입됨 -->
+            </div>
+        </div>
     </section>
 
     <!-- 4. 캐릭터 소개 페이지 -->
     <section id="step-four-page" class="screen">
+        <div id="fireworks-container" class="fireworks hidden"></div>
+        <div class="character-card-container">
+            <img id="character-image" class="character-card" src="" alt="캐릭터">
+            <div id="character-stars" class="character-stars"></div>
+        </div>
     </section>
 
     <!-- 5. 결과 정리 및 다시 뽑기 페이지 -->
-    <section id="step-five-page" class="screen">
+    <section id="step-five-page" class="screen" style="background-color: red;">
     </section>
 
     <!-- javascript -->
+    <script src="gacha.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
