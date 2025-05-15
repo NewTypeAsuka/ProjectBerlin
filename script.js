@@ -86,25 +86,59 @@ function getCanvasPos(e) {
 }
 
 // 드로잉 함수
+let lastX = 0;
+let lastY = 0;
+
 function draw(e) {
     if (!drawing) return;
     const pos = getCanvasPos(e);
-    ctx.fillStyle = "#007bff";
+
     ctx.beginPath();
-    ctx.arc(pos.x, pos.y, 2, 0, Math.PI * 2);
-    ctx.fill();
+    ctx.moveTo(lastX, lastY);      // 이전 점에서
+    ctx.lineTo(pos.x, pos.y);      // 현재 점까지 선 연결
+    ctx.stroke();                  // 선 그리기
+
+    lastX = pos.x;
+    lastY = pos.y;
     hasDrawn = true;
 }
 
+// 드로잉 위치 조정
+function resizeCanvas() {
+    const styleWidth = parseInt(getComputedStyle(canvas).width);
+    const styleHeight = parseInt(getComputedStyle(canvas).height);
+
+    canvas.width = styleWidth;
+    canvas.height = styleHeight;
+
+    // 드로잉 스타일 다시 설정 (필수!)
+    ctx.lineWidth = 5;
+    ctx.lineCap = "round";
+    ctx.strokeStyle = "#007bff";
+}
+
+// 페이지 로딩 및 리사이즈 시 캔버스 좌표계 리셋
+window.addEventListener("DOMContentLoaded", resizeCanvas);
+window.addEventListener("resize", resizeCanvas);
+
 // 드로잉 시작/종료
-canvas.addEventListener("mousedown", () => drawing = true);
+canvas.addEventListener("mousedown", (e) => {
+    drawing = true;
+    const pos = getCanvasPos(e);
+    lastX = pos.x;
+    lastY = pos.y;
+});
 canvas.addEventListener("mouseup", () => {
     drawing = false;
     if (hasDrawn) triggerSignComplete();
 });
 canvas.addEventListener("mousemove", draw);
-
-canvas.addEventListener("touchstart", () => drawing = true);
+canvas.addEventListener("touchstart", (e) => {
+    drawing = true;
+    const pos = getCanvasPos(e);
+    lastX = pos.x;
+    lastY = pos.y;
+});
 canvas.addEventListener("touchend", () => {
     drawing = false;
     if (hasDrawn) triggerSignComplete();
@@ -114,17 +148,17 @@ canvas.addEventListener("touchmove", (e) => {
     e.preventDefault();
 });
 
+// 드로잉 선
+ctx.lineWidth = 5;
+ctx.lineCap = "round";
+ctx.strokeStyle = "#007bff";
+
 // 폭죽 효과
 function triggerSignComplete() {
     if (fireworksContainer.classList.contains("playing")) return;
 
     // 화면 플래시 효과
     triggerFlash();
-
-    // 모바일 진동 효과
-    if (navigator.vibrate) {
-        navigator.vibrate(100);
-    }
 
     // 폭죽 애니메이션 실행
     fireworksContainer.classList.remove("hidden");
