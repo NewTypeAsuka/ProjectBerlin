@@ -154,10 +154,6 @@ body {
     border-radius: 50%;
     opacity: 1;
     animation: explode 0.8s ease-out forwards;
-    box-shadow: 
-        0 0 4px currentColor,
-        0 0 8px currentColor,
-        0 0 12px currentColor;
 }
 @keyframes explode {
     0% {
