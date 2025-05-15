@@ -133,7 +133,8 @@ body {
 }
 .sign-instruction {
     margin-bottom: 1rem;
-    font-size: 1.1rem;
+    font-size: 1.5rem;
+    font-weight: bolder;
     color: #333;
 }
 
