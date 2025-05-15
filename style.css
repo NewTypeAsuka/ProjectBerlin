@@ -34,7 +34,8 @@ body {
     background-color: rgba(0, 0, 0, 0.8);
 }
 
-/* 1. 가챠 인트로 페이지 */
+/* 1. 가챠 인트로 페이지 ///////////////////////////////// */
+
 /* 로고 */
 .logo-image {
     display: block;
@@ -83,6 +84,7 @@ body {
     border-color: transparent transparent white transparent;
 }
 
+/* 가챠 인트로 페이지 기본 */
 .intro-container {
     max-width: 480px;
     margin: 0 auto;
@@ -114,4 +116,71 @@ body {
 }
 .gacha-button:hover {
     background-color: #0056b3;
+}
+
+/* 2. 아로나 사인 페이지 ///////////////////////////////// */
+
+/* 아로나 사인 페이지 기본 */
+.sign-container {
+    text-align: center;
+    margin-top: 2rem;
+}
+#signCanvas {
+    border: 2px solid #ccc;
+    background-color: white;
+    touch-action: none; /* 터치 드래그 방지 */
+    border-radius: 8px;
+}
+.sign-instruction {
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+    color: #333;
+}
+
+/* 폭죽 연출 */
+.fireworks {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    pointer-events: none;
+    z-index: 999;
+}
+.firework {
+    position: absolute;
+    bottom: 0;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    opacity: 1;
+    animation: explode 0.8s ease-out forwards;
+}
+@keyframes explode {
+    0% {
+        transform: translate(0, 0) scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(var(--x), var(--y)) scale(1.5);
+        opacity: 0;
+    }
+}
+.hidden {
+    display: none;
+}
+
+/* 플래시와 진동 */
+.flash-screen {
+    position: fixed;
+    inset: 0;
+    background: white;
+    opacity: 0;
+    z-index: 9999;
+    pointer-events: none;
+    animation: flash 0.3s ease-in-out;
+}
+@keyframes flash {
+    0%   { opacity: 0; }
+    50%  { opacity: 0.9; }
+    100% { opacity: 0; }
 }
