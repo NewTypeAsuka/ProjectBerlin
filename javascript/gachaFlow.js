@@ -12,7 +12,13 @@ export function renderGachaResult(cards) {
     cards.forEach((card, index) => {
         const cardElement = document.createElement("div");
         cardElement.classList.add("gacha-card", `rarity-${card.rarity}`);
-        cardElement.textContent = "⭐".repeat(Number(card.rarity));
+
+        // 등급별로 별 크기 다르게
+        const star = document.createElement("div");
+        star.textContent = "⭐".repeat(Number(card.rarity));
+        star.style.fontSize = card.rarity === "3" ? "1.8rem" : "1.5rem"; // 별 크기 차이
+        star.style.textAlign = "center";
+        cardElement.appendChild(star);
 
         // 카드 등장 애니메이션
         setTimeout(() => {
@@ -30,7 +36,7 @@ export function renderGachaResult(cards) {
                     const allCards = container.querySelectorAll(".gacha-card");
                     allCards.forEach((card, i) => {
                         card.classList.remove("animate-in");
-                        void card.offsetWidth; // 리렌더 트릭
+                        void card.offsetWidth;
 
                         const leftAngles = [-5, -10, -15];
                         const rightAngles = [5, 10, 15];
@@ -39,18 +45,19 @@ export function renderGachaResult(cards) {
                             ? leftAngles[Math.floor(Math.random() * leftAngles.length)]
                             : rightAngles[Math.floor(Math.random() * rightAngles.length)];
 
-                        card.style.transform = `rotateZ(${angle}deg)`;
+                        // glow 적용된 카드도 강제로 회전 포함
+                        const isGlowing = card.classList.contains("glow");
+                        const transformBase = isGlowing ? "scale(1.05)" : "scale(1)";
+                        card.style.transform = `${transformBase} rotateZ(${angle}deg)`;
                         card.style.transition = 'transform 0.5s ease-in-out';
                     });
-                }, 800); // 애니메이션 종료 후 살짝 기울이기
+                }, 800);
             }
+        }, index * 100);
 
-        }, index * 100); // 각 카드 등장 시점
         container.appendChild(cardElement);
     });
 }
-
-
 
 // 가챠 결과 공개 시작
 export function startCharacterReveal(results) {

@@ -13,6 +13,12 @@ body {
     font-family: 'Arial', sans-serif, 'Malgun Gothic', '맑은 고딕', '돋움';
     color: #333;
 }
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden;
+}
 
 /* 브금 on/off 버튼 */
 .sound-toggle {
@@ -257,6 +263,8 @@ canvas.signing {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     transform: rotateY(0deg);
     transition: transform 0.3s ease;
+    position: relative;
+    z-index: 2;
 }
 @media (min-width: 768px) and (max-width: 1023px) { /* 태블릿용 카드 뭉치 */
     .card-grid {
@@ -285,6 +293,41 @@ canvas.signing {
         height: auto;
         margin: 0 auto;
     }
+}
+
+/* 배경 추가 */
+#step-three-page {
+    background: url("images/common/background-mobile.jpg") no-repeat center center fixed;
+    background-size: cover;
+    min-height: 100vh;  /* 화면 전체 덮기 */
+    overflow: hidden;   /* 넘침 방지 */
+    position: relative;
+}
+@media (min-width: 768px) { /* 태블릿용 배경 */
+    #step-three-page {
+        background: url("images/common/background-tablet.jpg") no-repeat center center fixed;
+        background-size: cover;
+        min-height: 100vh;
+        overflow: hidden;
+        position: relative;
+    }
+}
+@media (min-width: 1024px) { /* 데스크탑용 배경 */
+    #step-three-page {
+        background: url("images/common/background-pc.jpg") no-repeat center center fixed;
+        background-size: cover;
+        min-height: 100vh;
+        overflow: hidden;
+        position: relative;
+    }
+}
+#step-three-page::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.25); /* 🌙 살짝 어두운 반투명 레이어 */
+    z-index: 1;
+    pointer-events: none;
 }
 
 /* 등급별 색상 */
@@ -316,19 +359,16 @@ canvas.signing {
         box-shadow:
             0 0 0px rgba(255, 105, 180, 0),
             0 0 0px rgba(255, 105, 180, 0);
-        transform: scale(1);
     }
     50% {
         box-shadow:
             0 0 20px 10px rgba(255, 105, 180, 0.9),
             0 0 20px 10px rgba(255, 255, 255, 0.7);
-        transform: scale(1.05);
     }
     100% {
         box-shadow:
             0 0 0px rgba(255, 105, 180, 0),
             0 0 0px rgba(255, 105, 180, 0);
-        transform: scale(1);
     }
 }
 .gacha-card.glow {
