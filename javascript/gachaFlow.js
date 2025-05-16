@@ -38,8 +38,8 @@ export function renderGachaResult(cards) {
                         card.classList.remove("animate-in");
                         void card.offsetWidth;
 
-                        const leftAngles = [-5, -10, -15];
-                        const rightAngles = [5, 10, 15];
+                        const leftAngles = [5, -5, -10, -15];
+                        const rightAngles = [-5, 5, 10, 15];
                         const isLeft = i % 2 === 0;
                         const angle = isLeft
                             ? leftAngles[Math.floor(Math.random() * leftAngles.length)]
