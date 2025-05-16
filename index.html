@@ -11,6 +11,18 @@
     <meta property="og:title" content="BlueArchive Gacha Simulation">
     <meta property="og:description" content="블루아카이브 가챠 시뮬레이터">
     <meta property="og:image" content="images/common/Logo.png">
+    <!-- 카카오톡 브라우저 대응 -->
+    <style>
+        body.kakao-browser .arona2-wrapper {
+            flex-direction: column !important;
+            align-items: center !important;
+        }
+        body.kakao-browser .arona2-image {
+            transform: translateX(0) scale(1.1);
+            top: -100px;
+            position: relative;
+        }
+    </style>
     <!-- css 및 타이틀 -->
     <link rel="stylesheet" href="style.css">
     <title>⭐BlueArchive Gacha Simulator⭐</title>
@@ -32,7 +44,7 @@
             <div class="arona-container">
                 <img src="images/common/Arona.jpg" alt="Arona" class="arona-image" />
                 <div class="speech-bubble" id="arona-message">
-                    안녕하세요! 가챠 운이 좋길 바랄게요!
+                    아로나가 3성을 응원할게요!
                 </div>
             </div>
             <h1 class="intro-title">🎯 가챠 방식 선택 🎯</h1>

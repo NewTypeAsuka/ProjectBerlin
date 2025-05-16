@@ -11,6 +11,15 @@ const canvas = document.getElementById("signCanvas");
 const ctx = canvas.getContext("2d");
 const fireworksContainer = document.getElementById("fireworks-container");
 
+// 카카오톡 브라우저 대응
+function detectKakaoBrowser() {
+    const ua = navigator.userAgent.toLowerCase();
+    if (ua.includes("kakaotalk")) {
+        document.body.classList.add("kakao-browser");
+    }
+}
+window.addEventListener("DOMContentLoaded", detectKakaoBrowser);
+
 // 브금 컨트롤 버튼 핸들러
 document.addEventListener("DOMContentLoaded", () => {
     bgm.volume = 0.1; // 초기 볼륨 설정
@@ -46,12 +55,13 @@ function changeScreen(targetId) {
 
 // 아로나 랜덤 메시지
 const aronaQuotes = [
-    "안녕하세요! 가챠 운이 좋길 바랄게요!",
-    "어서 오세요! 준비되셨나요?",
-    "희망은 항상 가까이에 있어요!",
+    "안녕하세요! 아로나입니다!",
+    "어서 오세요! 선생님! 준비되셨나요?",
+    "3성은 항상 가까이에 있어요!",
     "이번엔 꼭 3성이 나올 거예요!",
     "오늘은 왠지 좋은 예감이 들어요!",
-    "아로나가 3성을 응원하고 있어요!"
+    "3성아~ 나와라~",
+    "아로나가 3성을 응원할게요!"
 ];
 
 function updateAronaMessage() {
