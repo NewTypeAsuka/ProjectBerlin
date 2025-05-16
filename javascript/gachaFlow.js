@@ -14,20 +14,43 @@ export function renderGachaResult(cards) {
         cardElement.classList.add("gacha-card", `rarity-${card.rarity}`);
         cardElement.textContent = "⭐".repeat(Number(card.rarity));
 
-        setTimeout(() => { // 회전 애니메이션
+        // 카드 등장 애니메이션
+        setTimeout(() => {
             cardElement.classList.add("animate-in");
 
-            if (card.rarity === "3") { // 3성일 경우 glow 효과
-                // spin 애니메이션이 끝난 후 glow 효과 추가
+            if (card.rarity === "3") {
                 setTimeout(() => {
                     cardElement.classList.add("glow");
-                }, 500); // spin 애니메이션 시간과 동일하게 지연
+                }, 500);
             }
-        }, index * 100);
 
+            // 마지막 카드 등장 후 → 랜덤 기울기 적용
+            if (index === cards.length - 1) {
+                setTimeout(() => {
+                    const allCards = container.querySelectorAll(".gacha-card");
+                    allCards.forEach((card, i) => {
+                        card.classList.remove("animate-in");
+                        void card.offsetWidth; // 리렌더 트릭
+
+                        const leftAngles = [-5, -10, -15];
+                        const rightAngles = [5, 10, 15];
+                        const isLeft = i % 2 === 0;
+                        const angle = isLeft
+                            ? leftAngles[Math.floor(Math.random() * leftAngles.length)]
+                            : rightAngles[Math.floor(Math.random() * rightAngles.length)];
+
+                        card.style.transform = `rotateZ(${angle}deg)`;
+                        card.style.transition = 'transform 0.5s ease-in-out';
+                    });
+                }, 800); // 애니메이션 종료 후 살짝 기울이기
+            }
+
+        }, index * 100); // 각 카드 등장 시점
         container.appendChild(cardElement);
     });
 }
+
+
 
 // 가챠 결과 공개 시작
 export function startCharacterReveal(results) {
