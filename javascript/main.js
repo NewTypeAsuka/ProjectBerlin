@@ -22,6 +22,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
     // DOM 요소들 이 시점에서 선언해야 null 방지 가능
     const gachaCommonBtn = document.getElementById("gacha-common-btn");
+    const gachaPickBtn = document.getElementById("gacha-pick-btn");
     const gachaFesBtn = document.getElementById("gacha-fes-btn");
     const bgm = document.getElementById("bgm");
     const soundToggleBtn = document.getElementById("sound-toggle-btn");
@@ -54,7 +55,11 @@ window.addEventListener("DOMContentLoaded", () => {
         gachaMode = "normal";
         changeScreen("step-two-page");
     });
-
+    gachaPickBtn.addEventListener("click", () => {
+        gachaMode = "pick";
+        alert("픽업 가챠는 현재 준비 중입니다.");
+        // changeScreen("step-two-page");
+    });
     gachaFesBtn.addEventListener("click", () => {
         gachaMode = "fes";
         changeScreen("step-two-page");

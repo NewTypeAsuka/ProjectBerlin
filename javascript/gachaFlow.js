@@ -9,14 +9,26 @@ export function renderGachaResult(cards) {
     const container = document.getElementById("gacha-result-grid");
     container.innerHTML = "";
 
-    cards.forEach(card => {
+    cards.forEach((card, index) => {
         const cardElement = document.createElement("div");
         cardElement.classList.add("gacha-card", `rarity-${card.rarity}`);
-        cardElement.textContent = "???"; // 카드 가림막 표시
+        cardElement.textContent = "⭐".repeat(Number(card.rarity));
+
+        setTimeout(() => { // 회전 애니메이션
+            cardElement.classList.add("spin");
+
+            if (card.rarity === "3") { // 3성일 경우 glow 효과
+                // spin 애니메이션이 끝난 후 glow 효과 추가
+                setTimeout(() => {
+                    cardElement.classList.add("glow");
+                }, 500); // spin 애니메이션 시간과 동일하게 지연
+            }
+        }, index * 100);
 
         container.appendChild(cardElement);
     });
 }
+
 
 // 가챠 결과 공개 시작
 export function startCharacterReveal(results) {
