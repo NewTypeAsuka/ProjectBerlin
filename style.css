@@ -293,15 +293,21 @@ canvas.signing {
 .rarity-1 { background: royalblue; }
 
 /* 카드 애니메이션 */
-@keyframes spin-to-reveal {
-    0%   { transform: rotateY(0deg);   }
-    80%  { transform: rotateY(1440deg); }
-    100% { transform: rotateY(1800deg); }
+@keyframes pop-in-spin {
+    0% {
+        transform: translateZ(400px) scale(1.8) rotateY(0deg);
+        opacity: 0;
+    }
+    100% {
+        transform: translateZ(0) scale(1) rotateY(360deg); /* 카드 회전량 */
+        opacity: 1;
+    }
 }
-.gacha-card.spin {
-    animation: spin-to-reveal 0.5s ease-out forwards;
+.gacha-card.animate-in {
+    animation: pop-in-spin 0.8s ease-out forwards;
     transform-style: preserve-3d;
     backface-visibility: hidden;
+    perspective: 1000px;
 }
 
 /* 3성 카드 애니메이션 */

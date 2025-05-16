@@ -15,7 +15,7 @@ export function renderGachaResult(cards) {
         cardElement.textContent = "⭐".repeat(Number(card.rarity));
 
         setTimeout(() => { // 회전 애니메이션
-            cardElement.classList.add("spin");
+            cardElement.classList.add("animate-in");
 
             if (card.rarity === "3") { // 3성일 경우 glow 효과
                 // spin 애니메이션이 끝난 후 glow 효과 추가
@@ -28,7 +28,6 @@ export function renderGachaResult(cards) {
         container.appendChild(cardElement);
     });
 }
-
 
 // 가챠 결과 공개 시작
 export function startCharacterReveal(results) {
