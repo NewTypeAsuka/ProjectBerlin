@@ -20,7 +20,6 @@ const gachaRates = {
     fes:    { "3": 6.0, "2": 18.5, "1": 75.5 }
 };
 
-// 등급 결정 함수
 function getRandomRarity(mode = "normal") {
     const roll = Math.random() * 100;
     const rate = gachaRates[mode];
@@ -30,7 +29,6 @@ function getRandomRarity(mode = "normal") {
     else return "1";
 }
 
-// 캐릭터 한 명 뽑기
 function getRandomCharacter(mode = "normal") {
     const rarity = getRandomRarity(mode);
     const pool = characterPool[rarity];
@@ -38,8 +36,8 @@ function getRandomCharacter(mode = "normal") {
     return { ...pool[index], rarity };
 }
 
-// 10연 뽑기 결과 배열 반환
-function getGachaResult(mode = "normal") {
+export function getGachaResult(mode = "normal") {
+    console.log("✅ getGachaResult called with mode:", mode);
     const results = [];
     for (let i = 0; i < 10; i++) {
         results.push(getRandomCharacter(mode));
