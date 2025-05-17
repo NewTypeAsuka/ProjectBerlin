@@ -24,12 +24,14 @@ export function renderGachaResult(cards) {
         setTimeout(() => {
             cardElement.classList.add("animate-in");
 
-            // 카드가 등장할 때마다 효과음 재생
-            const sound = new Audio("sounds/pon.mp3");
-            sound.volume = 1.0;
-            sound.play().catch((e) => {
-                console.warn("pon 효과음 재생 실패:", e);
-            });
+            // 짝수 카드가 등장할 때마다 효과음 재생
+            if (index % 2 === 0) {
+                const sound = new Audio("sounds/pon.mp3");
+                sound.volume = 1.0;
+                sound.play().catch((e) => {
+                    console.warn("pon 효과음 재생 실패:", e);
+                });
+            }
 
             // 이하 기존 코드 유지
             if (card.rarity === "3") {
@@ -60,7 +62,7 @@ export function renderGachaResult(cards) {
                     });
                 }, 800);
             }
-        }, index * 100);
+        }, index * 100); // 카드 나오는 속도
 
         container.appendChild(cardElement);
     });
