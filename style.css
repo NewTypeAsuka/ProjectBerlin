@@ -426,5 +426,39 @@ canvas.signing {
     position: relative;
 }
 
+/* 카드 사라지는 좌우/상하로 애니메이션 */
+.gacha-card.disappear-left {
+    animation: disappear-left 0.4s ease forwards;
+}
+.gacha-card.disappear-right {
+    animation: disappear-right 0.4s ease forwards;
+}
+@keyframes disappear-left {
+    0% { transform: translateX(0); opacity: 1; }
+    100% { transform: translateX(-120vw); opacity: 0; }
+}
+@keyframes disappear-right {
+    0% { transform: translateX(0); opacity: 1; }
+    100% { transform: translateX(120vw); opacity: 0; }
+}
+@media (min-width: 768px) {
+    .gacha-card.disappear-up {
+        animation: disappear-up 0.4s ease forwards;
+    }
+    .gacha-card.disappear-down {
+        animation: disappear-down 0.4s ease forwards;
+    }
+    @keyframes disappear-up {
+        0% { transform: translateY(0); opacity: 1; }
+        100% { transform: translateY(-120vh); opacity: 0; }
+    }
+    @keyframes disappear-down {
+        0% { transform: translateY(0); opacity: 1; }
+        100% { transform: translateY(120vh); opacity: 0; }
+    }
+}
+
+
+
 /* 4. 캐릭터 소개 페이지 ///////////////////////////////// */
 
