@@ -29,6 +29,7 @@ function getRandomRarity(mode = "normal") {
     else return "1";
 }
 
+
 function getRandomCharacter(mode = "normal") {
     const rarity = getRandomRarity(mode);
     const pool = characterPool[rarity];
