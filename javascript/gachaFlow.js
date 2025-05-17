@@ -25,21 +25,20 @@ export function renderGachaResult(cards) {
             cardElement.classList.add("animate-in");
 
             // 카드가 등장할 때마다 효과음 재생
-            const ponSound = document.getElementById("pon-sound");
-            if (ponSound) {
-                ponSound.currentTime = 0;
-                ponSound.play().catch((e) => {
-                    console.warn("pon 효과음 재생 실패:", e);
-                });
-            }
+            const sound = new Audio("sounds/pon.mp3");
+            sound.volume = 1.0;
+            sound.play().catch((e) => {
+                console.warn("pon 효과음 재생 실패:", e);
+            });
 
+            // 이하 기존 코드 유지
             if (card.rarity === "3") {
                 setTimeout(() => {
                     cardElement.classList.add("glow");
                 }, 500);
             }
 
-            // 마지막 카드 등장 후 → 랜덤 기울기 적용
+            // 마지막 카드 등장 후 랜덤 회전
             if (index === cards.length - 1) {
                 setTimeout(() => {
                     const allCards = container.querySelectorAll(".gacha-card");
@@ -54,7 +53,6 @@ export function renderGachaResult(cards) {
                             ? leftAngles[Math.floor(Math.random() * leftAngles.length)]
                             : rightAngles[Math.floor(Math.random() * rightAngles.length)];
 
-                        // glow 적용된 카드도 강제로 회전 포함
                         const isGlowing = card.classList.contains("glow");
                         const transformBase = isGlowing ? "scale(1.05)" : "scale(1)";
                         card.style.transform = `${transformBase} rotateZ(${angle}deg)`;
