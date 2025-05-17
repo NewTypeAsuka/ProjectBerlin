@@ -19,6 +19,7 @@ export function changeScreen(targetId) {
     const target = document.getElementById(targetId);
     if (target) {
         target.classList.add("active");
+        window.scrollTo(0, 0);
     }
 }
 
