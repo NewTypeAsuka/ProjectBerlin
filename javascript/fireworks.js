@@ -4,23 +4,28 @@ import { renderGachaResult } from './gachaFlow.js';
 
 // 변수
 const fireworksContainer = document.getElementById("fireworks-container");
-
+const gachaSound = document.getElementById("gacha-sound");
 
 // 폭죽 효과
 export function triggerSignComplete() {
     if (fireworksContainer.classList.contains("playing")) return;
-
-    // 화면 플래시 효과
-    triggerFlash();
 
     // 폭죽 애니메이션 실행
     fireworksContainer.classList.remove("hidden");
     fireworksContainer.classList.add("playing");
     launchFireworks();
 
+    // 가챠 효과음 재생 추가
+    if (gachaSound) {
+        gachaSound.currentTime = 0;
+        gachaSound.play().catch((e) => {
+            console.warn("효과음 재생 실패:", e);
+        });
+    }
+
     // 1.5초 뒤 다음 화면으로 전환
     setTimeout(() => {
-        const gachaMode = "normal"; // TODO: 외부에서 주입받게 할 수도 있음
+        const gachaMode = "normal";
         const result = getGachaResult(gachaMode);
         renderGachaResult(result); // 가림막 카드 표시
         changeScreen("step-three-page");
@@ -59,12 +64,4 @@ function launchFireworks() {
 function getRandomColor() {
     const colors = ["#ff4081", "#ffd740", "#69f0ae", "#40c4ff", "#7c4dff", "#f06292", "#fff176"];
     return colors[Math.floor(Math.random() * colors.length)];
-}
-
-// 화면 플래시 효과
-function triggerFlash() {
-    const flash = document.createElement("div");
-    flash.classList.add("flash-screen");
-    document.body.appendChild(flash);
-    setTimeout(() => flash.remove(), 300);
 }

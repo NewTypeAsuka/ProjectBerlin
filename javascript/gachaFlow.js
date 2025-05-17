@@ -16,13 +16,22 @@ export function renderGachaResult(cards) {
         // 등급별로 별 크기 다르게
         const star = document.createElement("div");
         star.textContent = "⭐".repeat(Number(card.rarity));
-        star.style.fontSize = card.rarity === "3" ? "1.8rem" : "1.5rem"; // 별 크기 차이
+        star.style.fontSize = card.rarity === "3" ? "2.1rem" : "1.7rem"; // 별 크기 차이
         star.style.textAlign = "center";
         cardElement.appendChild(star);
 
         // 카드 등장 애니메이션
         setTimeout(() => {
             cardElement.classList.add("animate-in");
+
+            // 카드가 등장할 때마다 효과음 재생
+            const ponSound = document.getElementById("pon-sound");
+            if (ponSound) {
+                ponSound.currentTime = 0;
+                ponSound.play().catch((e) => {
+                    console.warn("pon 효과음 재생 실패:", e);
+                });
+            }
 
             if (card.rarity === "3") {
                 setTimeout(() => {
