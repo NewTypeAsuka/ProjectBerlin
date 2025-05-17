@@ -1,4 +1,5 @@
 import { changeScreen } from './util.js';
+import { getGachaResult } from './gacha.js';
 
 // 변수
 let gachaResults = []; // step-three에서 넘겨받은 결과

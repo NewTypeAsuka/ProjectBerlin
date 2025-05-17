@@ -11,16 +11,14 @@ const ctx = canvas.getContext("2d");
 let lastX = 0;
 let lastY = 0;
 
-// 드로잉 위치 조정
+// 드로잉 위치 동기화
 function resizeCanvas() {
-
     const styleWidth = parseInt(getComputedStyle(canvas).width);
     const styleHeight = parseInt(getComputedStyle(canvas).height);
 
     canvas.width = styleWidth;
     canvas.height = styleHeight;
 
-    // 드로잉 스타일 다시 설정 (필수!)
     ctx.lineWidth = 5;
     ctx.lineCap = "round";
     ctx.strokeStyle = "#007bff";
@@ -31,8 +29,7 @@ function draw(e) {
     if (!drawing) return;
     const pos = getCanvasPos(e, canvas);
 
-    // 선 그라데이션
-    const hue = (Date.now() / 10) % 360;
+    const hue = (Date.now() / 10) % 360; // 선 그라데이션
     ctx.strokeStyle = `hsl(${hue}, 100%, 60%)`;
 
     ctx.beginPath();

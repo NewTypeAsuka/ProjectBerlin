@@ -1,10 +1,9 @@
-import { startCharacterReveal } from './gachaFlow.js';
 import { setupSignCanvas } from './sign.js';
 import { changeScreen, detectKakaoBrowser } from './util.js';
+import { gachaState } from './gacha.js';
 
 // 변수
-let gachaMode = "normal";
-let lastGachaResult = [];
+const ponSound = document.getElementById("pon-sound");
 const aronaQuotes = [
     "안녕하세요! 아로나입니다!",
     "어서 오세요! 선생님! 준비되셨나요?",
@@ -52,22 +51,21 @@ window.addEventListener("DOMContentLoaded", () => {
 
     // 버튼 클릭 이벤트
     gachaCommonBtn.addEventListener("click", () => {
-        gachaMode = "normal";
+        gachaState.mode = "normal";
+        ponSound.currentTime = 0;
+        ponSound.play();
         changeScreen("step-two-page");
     });
     gachaPickBtn.addEventListener("click", () => {
-        gachaMode = "pick";
-        alert("픽업 가챠는 현재 준비 중입니다.");
-        // changeScreen("step-two-page");
-    });
-    gachaFesBtn.addEventListener("click", () => {
-        gachaMode = "fes";
+        gachaState.mode = "pick";
+        ponSound.currentTime = 0;
+        ponSound.play();
         changeScreen("step-two-page");
     });
-
-    // step-three 클릭 시 step-four 이동
-    const stepThree = document.getElementById("step-three-page");
-    stepThree.addEventListener("click", () => {
-        startCharacterReveal(lastGachaResult);
+    gachaFesBtn.addEventListener("click", () => {
+        gachaState.mode = "fes";
+        ponSound.currentTime = 0;
+        ponSound.play();
+        changeScreen("step-two-page");
     });
 });
