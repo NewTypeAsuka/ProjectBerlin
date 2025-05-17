@@ -458,7 +458,53 @@ canvas.signing {
     }
 }
 
-
-
 /* 4. 캐릭터 소개 페이지 ///////////////////////////////// */
 
+/* 캐릭터 소개 페이지 기본 */
+.character-card-container {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.character-card {
+    width: 50vw;
+    max-width: 280px;
+    border-radius: 16px;
+    object-fit: cover;
+    opacity: 0;
+    transform: translateY(60px);
+    transition: all 0.6s ease;
+}
+.character-card.enter {
+    opacity: 1;
+    transform: translateY(0);
+}
+.character-info {
+    margin-top: 1rem;
+    text-align: center;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 0.6s ease;
+}
+.character-info.enter {
+    opacity: 1;
+    transform: translateY(0);
+}
+.character-name {
+    font-size: 1.6rem;
+    font-weight: bold;
+}
+.character-school {
+    font-size: 1.1rem;
+    color: #888;
+    margin: 0.4rem 0;
+}
+.character-stars {
+    font-size: 1.8rem;
+    color: gold;
+}
