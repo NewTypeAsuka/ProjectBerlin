@@ -60,6 +60,11 @@ export function renderGachaResult(cards) {
                         card.style.transform = `${transformBase} rotateZ(${angle}deg)`;
                         card.style.transition = 'transform 0.5s ease-in-out';
                     });
+                
+                // 화면 터치 가이드 표시
+                const touchGuide = document.getElementById('touch-guide');
+                if (touchGuide) touchGuide.style.display = 'block';
+                
                 }, 800);
             }
         }, index * 100); // 카드 나오는 속도

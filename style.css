@@ -289,6 +289,48 @@ canvas.signing {
     }
 }
 
+/* 화면 터치 가이드 */
+.touch-guide {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #fff;
+    text-shadow: 0 2px 8px #222, 0 0 16px #4ea1ff;
+    z-index: 1001;
+    pointer-events: none;
+    animation: touch-guide-glow 1.2s ease-in-out infinite;
+}
+@media (min-width: 768px) {
+    .touch-guide {
+        font-size: 2.0rem;
+    }
+}
+@media (min-width: 1024px) {
+    .touch-guide {
+        font-size: 3.0rem;
+    }
+}
+
+/* 화면 터치 문구 애니메이션 */
+@keyframes touch-guide-glow {
+    0% {
+        transform: translate(-50%, -50%) scale(1);
+        text-shadow: 0 2px 8px #222, 0 0 16px #4ea1ff;
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(1.13);
+        text-shadow: 0 4px 16px #222, 0 0 32px #4ea1ff;
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(1);
+        text-shadow: 0 2px 8px #222, 0 0 16px #4ea1ff;
+    }
+}
+
 /* 배경 추가 */
 #step-three-page {
     background: url("images/common/background-mobile.jpg") no-repeat center center fixed;
