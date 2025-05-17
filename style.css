@@ -1,7 +1,7 @@
 /* 페이지 숨김/보이기 */
 .screen {
     display: none;
-    padding: 2rem 1rem;
+    padding: 2rem 1rem; /* 기본 패딩 */
 }
 .screen.active {
     display: block;
@@ -17,7 +17,7 @@ html, body {
     margin: 0;
     padding: 0;
     height: 100%;
-    overflow: hidden;
+    overflow: hidden; /* 스크롤 방지 */
 }
 
 /* 브금 on/off 버튼 */
@@ -47,6 +47,12 @@ html, body {
     margin: 0.5rem auto 1.5rem;
     max-width: 300px;
     width: 80%;
+}
+@media (min-width: 1024px) { /* 데스크탑에서는 로고 키우기 */
+    .logo-image {
+        max-width: 540px;
+        width: 100%;
+    }
 }
 
 /* 아로나 이미지 컨테이너 */
@@ -78,7 +84,7 @@ html, body {
     text-align: center;
     box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
-.speech-bubble::after {
+.speech-bubble::after { /* 말풍선 꼬리 */
     content: "";
     position: absolute;
     bottom: 100%;
@@ -143,29 +149,29 @@ html, body {
     height: 300px;
     border: 2px solid #ccc;
     background-color: white;
-    touch-action: none; /* 터치 드래그 방지 */
+    touch-action: none; /* 스마트폰에서 드래그 방지 */
     border-radius: 8px;
     cursor: crosshair;
     margin-bottom: 30px;
 }
 canvas.signing {
-    background-color: #ffe6f0 !important;  /* 연한 분홍색 */
+    background-color: #ffe6f0 !important;
     transition: background-color 0.3s ease;
 }
-@media (min-width: 768px) { /* 태블릿용 사인창 확대 */
+@media (min-width: 768px) {
     #signCanvas {
         width: 500px;
         height: 300px;
     }
 }
-@media (min-width: 1024px) { /* 데스크탑용 사인창 확대 */
+@media (min-width: 1024px) {
     #signCanvas {
         width: 700px;
         height: 300px;
     }
 }
 
-/* 아로나 전체 이미지 */
+/* 아로나 하단 이미지 */
 .arona-full-image {
     max-width: 100%;
     height: auto;
@@ -189,12 +195,16 @@ canvas.signing {
 .firework { /* 폭죽 알갱이 */
     position: absolute;
     bottom: 0;
-    width: 10px;
-    height: 10px;
+    width: var(--fw-size, 12px);
+    height: var(--fw-size, 12px);
     border-radius: 50%;
     opacity: 1;
-    animation: explode 0.8s ease-out forwards;
+    animation: explode 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards, firework-glow 0.9s linear forwards;
 }
+/* nth-child로 폭죽 알갱이 크기 다양화 */
+.firework:nth-child(3n)   { --fw-size: 8px; }
+.firework:nth-child(3n+1) { --fw-size: 10px; }
+.firework:nth-child(3n+2) { --fw-size: 12px; }
 @keyframes explode {
     0% {
         transform: translate(0, 0) scale(1);
@@ -207,22 +217,6 @@ canvas.signing {
 }
 .hidden {
     display: none;
-}
-
-/* 플래시 */
-.flash-screen {
-    position: fixed;
-    inset: 0;
-    background: white;
-    opacity: 0;
-    z-index: 9999;
-    pointer-events: none;
-    animation: flash 0.3s ease-in-out;
-}
-@keyframes flash {
-    0%   { opacity: 0; }
-    50%  { opacity: 0.9; }
-    100% { opacity: 0; }
 }
 
 /* 3. 가챠 페이지 ///////////////////////////////// */
@@ -299,8 +293,8 @@ canvas.signing {
 #step-three-page {
     background: url("images/common/background-mobile.jpg") no-repeat center center fixed;
     background-size: cover;
-    min-height: 100vh;  /* 화면 전체 덮기 */
-    overflow: hidden;   /* 넘침 방지 */
+    min-height: 100vh;
+    overflow: hidden;
     position: relative;
 }
 @media (min-width: 768px) { /* 태블릿용 배경 */
@@ -325,7 +319,7 @@ canvas.signing {
     content: "";
     position: absolute;
     inset: 0;
-    background: rgba(0, 0, 0, 0.25); /* 🌙 살짝 어두운 반투명 레이어 */
+    background: rgba(0, 0, 0, 0.25); /* 어두운 반투명 레이어 */
     z-index: 1;
     pointer-events: none;
 }
@@ -333,7 +327,8 @@ canvas.signing {
 /* 등급별 색상 */
 .rarity-3 { background: hotpink; }
 .rarity-2 { background: gold; }
-.rarity-1 { background: royalblue; }
+.rarity-1 { background: dodgerblue; }
+.rarity-1:nth-child(3n) { background: royalblue; } /* 1성 카드 랜덤 색깔 */
 
 /* 카드 애니메이션 */
 @keyframes pop-in-spin {
@@ -352,8 +347,15 @@ canvas.signing {
     backface-visibility: hidden;
     perspective: 1000px;
 }
+@media (min-width: 1024px) {
+    .gacha-card:hover {
+        z-index: 5;
+        box-shadow: 0 20px 48px 0 rgba(0, 0, 0, 0.38), 0 2px 16px 0 rgba(0, 128, 255, 0.18);
+        transition: transform 0.18s cubic-bezier(0.4,1.4,0.6,1), box-shadow 0.18s;
+    }
+}
 
-/* 3성 카드 애니메이션 */
+/* 3성 카드 전용 애니메이션 */
 @keyframes glow {
     0% {
         box-shadow:
@@ -381,33 +383,3 @@ canvas.signing {
 
 /* 4. 캐릭터 소개 페이지 ///////////////////////////////// */
 
-/* 캐릭터 소개 페이지 기본 */
-.character-card-container {
-    position: relative;
-    width: 100vw;
-    height: 100vh;
-    overflow: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-}
-.character-card {
-    width: 42vw;
-    height: 13vh;
-    border-radius: 12px;
-    box-shadow: 0 8px 16px rgba(0,0,0,0.3);
-    object-fit: cover;
-    opacity: 0;
-    transform: translateX(100vw);
-    transition: transform 0.8s ease-out, opacity 0.4s ease-in;
-}
-.character-card.enter {
-    transform: translateX(0);
-    opacity: 1;
-}
-.character-stars {
-    margin-top: 1rem;
-    font-size: 2.2rem;
-    color: gold;
-}

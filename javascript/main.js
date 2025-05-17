@@ -2,7 +2,7 @@ import { startCharacterReveal } from './gachaFlow.js';
 import { setupSignCanvas } from './sign.js';
 import { changeScreen, detectKakaoBrowser } from './util.js';
 
-// 전역 변수
+// 변수
 let gachaMode = "normal";
 let lastGachaResult = [];
 const aronaQuotes = [
