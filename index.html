@@ -42,6 +42,9 @@
     <audio id="pon-sound" preload="auto">
         <source src="sounds/pon.mp3" type="audio/mpeg" />
     </audio>
+    <!-- 청휘석 표시 -->
+    <div id="pyroxene-used" class="pyroxene-used">사용 💎 0</div>
+
 
     <!-- 1. 가챠 인트로 페이지 -->
     <section id="step-one-page" class="screen active">
@@ -100,7 +103,16 @@
 
     <!-- 5. 결과 정리 및 다시 뽑기 페이지 -->
     <section id="step-five-page" class="screen">
+        <div class="result-summary">
+            <h2>✨ 이번 결과 요약 ✨</h2>
+            <div id="result-table-container"></div>
+        </div>
+        <div class="result-buttons">
+            <button id="retry-button" class="result-button">한번 더 뽑기</button>
+            <button id="home-button" class="result-button">처음으로</button>
+        </div>
     </section>
+
 
     <!-- javascript -->
     <script type="module" src="javascript/main.js"></script>

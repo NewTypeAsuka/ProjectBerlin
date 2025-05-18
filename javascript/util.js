@@ -1,3 +1,5 @@
+import { gachaState } from './gacha.js';
+
 // 공통 좌표 계산 함수
 export function getCanvasPos(e, canvas) {
     const rect = canvas.getBoundingClientRect();
@@ -19,6 +21,20 @@ export function changeScreen(targetId) {
     const target = document.getElementById(targetId);
     if (target) {
         target.classList.add("active");
+
+        if (targetId === "step-one-page") { // 현재 가챠 모드 로그 남기기
+            console.log("📢 현재 가챠 모드:", gachaState.mode);
+        }
+
+        if (targetId === "step-two-page") { // 사인 페이지로 이동 시 사인 초기화
+        const canvas = document.getElementById("signCanvas");
+        if (canvas) {
+            const ctx = canvas.getContext("2d");
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = "#ffffff";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+        }
+    }
 
         setTimeout(() => { // 스크롤 위치 초기화
             requestAnimationFrame(() => {

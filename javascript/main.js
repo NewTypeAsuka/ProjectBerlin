@@ -5,6 +5,7 @@ import { startCharacterReveal } from './gachaFlow.js';
 
 // 변수
 const ponSound = document.getElementById("pon-sound");
+let pyroxeneUsed = 0;
 const aronaQuotes = [
     "안녕하세요! 아로나입니다!",
     "어서 오세요! 선생님! 준비되셨나요?",
@@ -14,6 +15,14 @@ const aronaQuotes = [
     "3성아~ 나와라~",
     "아로나가 3성을 응원할게요!"
 ];
+
+// 청휘석 사용량 업데이트
+function updatePyroxeneDisplay() {
+    const el = document.getElementById("pyroxene-used");
+    if (el) {
+        el.textContent = `사용 💎 ${pyroxeneUsed.toLocaleString()}`;
+    }
+}
 
 // DOMContentLoaded 이벤트 리스너
 window.addEventListener("DOMContentLoaded", () => {
@@ -29,6 +38,7 @@ window.addEventListener("DOMContentLoaded", () => {
     const aronaMessage = document.getElementById("arona-message");
     const stepThreePage = document.getElementById("step-three-page");
     const gachaSound = document.getElementById("gacha-sound");
+    const homeButton = document.getElementById("home-button");
 
     // 브금 설정
     bgm.volume = 0.5;
@@ -43,6 +53,14 @@ window.addEventListener("DOMContentLoaded", () => {
             bgm.pause();
             soundToggleBtn.textContent = "🔇";
         }
+    });
+
+    // 청휘석 초기화
+    homeButton.addEventListener("click", () => {
+        gachaState.mode = "normal";
+        pyroxeneUsed = 0;
+        updatePyroxeneDisplay();
+        changeScreen("step-one-page");
     });
 
     // 아로나 메시지 갱신
@@ -95,6 +113,8 @@ window.addEventListener("DOMContentLoaded", () => {
         });
 
         setTimeout(() => {
+            pyroxeneUsed += 1200;        // ✅ 사용량 누적
+            updatePyroxeneDisplay();     // ✅ UI 업데이트
             changeScreen("step-four-page");
             startCharacterReveal(lastGachaResult); // 10장의 결과 전달
         }, 500);

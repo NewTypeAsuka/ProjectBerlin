@@ -1,5 +1,6 @@
 import { changeScreen } from './util.js';
-import { getGachaResult } from './gacha.js';
+import { lastGachaResult } from './gacha.js';
+import { gachaState } from './gacha.js';
 
 // 변수
 let gachaResults = []; // step-three에서 넘겨받은 결과
@@ -131,12 +132,19 @@ function showNextCharacter() {
 // 카드 클릭 → 다음 카드 or 결과 페이지
 document.getElementById("step-four-page").addEventListener("click", () => {
     currentIndex++;
+
     if (currentIndex < gachaResults.length) {
         showNextCharacter();
-    } else {
+    }
+    else if (currentIndex === gachaResults.length) {
+        // ✅ 여기에서 결과 요약 표 먼저 만들고
+        buildResultSummaryTable();
+
+        // ✅ 결과 페이지로 전환
         changeScreen("step-five-page");
     }
 });
+
 
 // 폭죽 효과 생성 함수 (중복 제거 위해 여기에 있음)
 function launchFireworks() {
@@ -166,3 +174,51 @@ function getRandomColor() {
     const colors = ["#ff4081", "#ffd740", "#69f0ae", "#40c4ff", "#7c4dff", "#f06292", "#fff176"];
     return colors[Math.floor(Math.random() * colors.length)];
 }
+
+// 결과 정리
+function buildResultSummaryTable() {
+    const container = document.getElementById("result-table-container");
+    if (!container) return;
+
+    // 정렬: 3성 → 2성 → 1성
+    const grouped = {
+        "3": [],
+        "2": [],
+        "1": []
+    };
+
+    lastGachaResult.forEach(char => {
+        grouped[char.rarity].push(char.name);
+    });
+
+    // HTML 테이블 구성
+    let html = `<table class="result-table">
+                    <thead><tr><th>등급</th><th>캐릭터</th></tr></thead>
+                    <tbody>`;
+
+    ["3", "2", "1"].forEach(rarity => {
+        const names = grouped[rarity];
+        if (names.length > 0) {
+            html += `<tr>
+                        <td>${"★".repeat(Number(rarity))}</td>
+                        <td>${names.join(", ")}</td>
+                    </tr>`;
+        }
+    });
+
+    html += "</tbody></table>";
+
+    container.innerHTML = html;
+}
+
+
+// 처음으로 버튼
+document.getElementById("home-button").addEventListener("click", () => {
+    gachaState.mode = "normal";
+    changeScreen("step-one-page");
+});
+
+// 한 번 더 뽑기 버튼
+document.getElementById("retry-button").addEventListener("click", () => {
+    changeScreen("step-two-page");
+});
