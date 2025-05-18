@@ -20,9 +20,10 @@ export function changeScreen(targetId) {
     if (target) {
         target.classList.add("active");
 
-        // 살짝 늦춰서 스크롤 초기화
-        setTimeout(() => {
-            window.scrollTo(0, 0);
+        setTimeout(() => { // 스크롤 위치 초기화
+            requestAnimationFrame(() => {
+                window.scrollTo(0, 0);
+            });
         }, 50);
     }
 }

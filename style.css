@@ -17,8 +17,10 @@ html, body {
     margin: 0;
     padding: 0;
     height: 100%;
-    overflow: hidden; /* 스크롤 방지 */
+    overflow-x: hidden;
+    scroll-behavior: auto;
 }
+
 body:has(#step-one-page.screen.active) { /* 첫 페이지에서 스크롤 */
     overflow: auto !important;
 }
