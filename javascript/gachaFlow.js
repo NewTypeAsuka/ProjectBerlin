@@ -108,7 +108,7 @@ function showNextCharacter() {
     img.src = `images/characters/${card.rarity}/${card.image}`;
     name.textContent = card.name;
     school.textContent = card.school;
-    stars.innerHTML = "★".repeat(Number(card.rarity));
+    stars.innerHTML = "⭐".repeat(Number(card.rarity));
 
     // 애니메이션 초기화 및 재적용
     img.classList.remove("enter");
@@ -180,36 +180,50 @@ function buildResultSummaryTable() {
     const container = document.getElementById("result-table-container");
     if (!container) return;
 
-    // 정렬: 3성 → 2성 → 1성
     const grouped = {
-        "3": [],
-        "2": [],
-        "1": []
+        "3": new Set(),
+        "2": new Set(),
+        "1": new Set()
     };
 
     lastGachaResult.forEach(char => {
-        grouped[char.rarity].push(char.name);
+        grouped[char.rarity].add(char.name);
     });
 
-    // HTML 테이블 구성
+    // 이미지 경로는 캐릭터 이름 기준으로 추정
+    const charInfoMap = {};
+    lastGachaResult.forEach(char => {
+        charInfoMap[char.name] = char;
+    });
+
     let html = `<table class="result-table">
-                    <thead><tr><th>등급</th><th>캐릭터</th></tr></thead>
-                    <tbody>`;
+        <thead><tr><th>등급</th><th>캐릭터</th></tr></thead>
+        <tbody>`;
 
     ["3", "2", "1"].forEach(rarity => {
-        const names = grouped[rarity];
-        if (names.length > 0) {
-            html += `<tr>
-                        <td>${"★".repeat(Number(rarity))}</td>
-                        <td>${names.join(", ")}</td>
-                    </tr>`;
-        }
+        const names = Array.from(grouped[rarity]);
+        names.forEach(name => {
+            const char = charInfoMap[name];
+            const imageSrc = `images/characters/${char.rarity}/${char.image}`;
+            const rowClass = char.rarity === "3" ? "highlight-row" : "";
+
+            html += `<tr class="${rowClass}">
+                <td>${"⭐".repeat(Number(rarity))}</td>
+                <td>
+                    <img src="${imageSrc}" alt="${name}" class="char-icon">
+                    ${name}
+                </td>
+            </tr>`;
+        });
     });
 
-    html += "</tbody></table>";
-
+    html += `</tbody></table>`;
     container.innerHTML = html;
 }
+
+
+
+
 
 
 // 처음으로 버튼

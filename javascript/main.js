@@ -1,6 +1,6 @@
 import { setupSignCanvas } from './sign.js';
 import { changeScreen, detectKakaoBrowser } from './util.js';
-import { gachaState, getGachaResult, lastGachaResult } from './gacha.js';
+import { gachaState, lastGachaResult } from './gacha.js';
 import { startCharacterReveal } from './gachaFlow.js';  
 
 // 변수

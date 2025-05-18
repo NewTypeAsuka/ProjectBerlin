@@ -582,6 +582,20 @@ canvas.signing {
     font-weight: bold;
 }
 
+/* 표에 들어가는 캐릭터 이미지 아이콘 */
+.char-icon {
+    width: 20px;
+    height: 20px;
+    object-fit: cover;
+    border-radius: 4px;
+    margin-right: 6px;
+    vertical-align: middle;
+}
+/* 3성 하이라이트 배경 */
+.highlight-row {
+    background-color: #ffe6f0;
+}
+
 /* 버튼 */
 .result-buttons {
     display: flex;
