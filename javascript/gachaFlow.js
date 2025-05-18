@@ -96,16 +96,37 @@ export function startCharacterReveal(results) {
 // 개별 캐릭터 카드 등장 처리
 function showNextCharacter() {
     const card = gachaResults[currentIndex];
+    console.log(`캐릭터 ${currentIndex + 1} / ${gachaResults.length}`, card);
+
     const img = document.getElementById("character-image");
+    const name = document.getElementById("character-name");
+    const school = document.getElementById("character-school");
     const stars = document.getElementById("character-stars");
+    const infoContainer = document.getElementById("character-info");
 
     img.src = `images/characters/${card.rarity}/${card.image}`;
-    img.classList.remove("enter");
-    void img.offsetWidth; // 리렌더 트릭
-    img.classList.add("enter");
-
+    name.textContent = card.name;
+    school.textContent = card.school;
     stars.innerHTML = "★".repeat(Number(card.rarity));
+
+    // 애니메이션 초기화 및 재적용
+    img.classList.remove("enter");
+    infoContainer.classList.remove("enter");
+    name.classList.remove("enter");
+    school.classList.remove("enter");
+    stars.classList.remove("enter");
+
+    void img.offsetWidth;
+    img.classList.add("enter");
+    infoContainer.classList.add("enter");
+    name.classList.add("enter");
+    school.classList.add("enter");
+    stars.classList.add("enter");
 }
+
+
+
+
 
 // 카드 클릭 → 다음 카드 or 결과 페이지
 document.getElementById("step-four-page").addEventListener("click", () => {

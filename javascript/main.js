@@ -1,6 +1,7 @@
 import { setupSignCanvas } from './sign.js';
 import { changeScreen, detectKakaoBrowser } from './util.js';
-import { gachaState } from './gacha.js';
+import { gachaState, getGachaResult, lastGachaResult } from './gacha.js';
+import { startCharacterReveal } from './gachaFlow.js';  
 
 // 변수
 const ponSound = document.getElementById("pon-sound");
