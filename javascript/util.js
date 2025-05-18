@@ -19,7 +19,11 @@ export function changeScreen(targetId) {
     const target = document.getElementById(targetId);
     if (target) {
         target.classList.add("active");
-        window.scrollTo(0, 0);
+
+        // 살짝 늦춰서 스크롤 초기화
+        setTimeout(() => {
+            window.scrollTo(0, 0);
+        }, 50);
     }
 }
 
