@@ -94,6 +94,11 @@ export function startCharacterReveal(results) {
     }, 1500);
 }
 
+// 학원 배경 설정
+function getSchoolMarkImagePath(school_eng) {
+    return `images/school/mark/${school_eng}_mark.png`;
+}
+
 // 개별 캐릭터 카드 등장 처리
 function showNextCharacter() {
     const card = gachaResults[currentIndex];
@@ -104,13 +109,17 @@ function showNextCharacter() {
     const school = document.getElementById("character-school");
     const stars = document.getElementById("character-stars");
     const infoContainer = document.getElementById("character-info");
+    const schoolMark = document.getElementById("school-mark-background");
 
-    img.src = `images/characters/${card.rarity}/${card.image}`;
+    img.src = `images/characters/${card.rarity}/${card.image}`; // 캐릭터 이미지 및 정보 설정
     name.textContent = card.name;
     school.textContent = card.school;
     stars.innerHTML = "⭐".repeat(Number(card.rarity));
 
-    // 애니메이션 초기화 및 재적용
+    if (schoolMark && card.school_eng) { // 학원 마크 배경 이미지 설정
+        schoolMark.style.backgroundImage = `url('${getSchoolMarkImagePath(card.school_eng)}')`;
+    }
+
     img.classList.remove("enter");
     infoContainer.classList.remove("enter");
     name.classList.remove("enter");
@@ -118,15 +127,16 @@ function showNextCharacter() {
     stars.classList.remove("enter");
 
     void img.offsetWidth;
+
     img.classList.add("enter");
     infoContainer.classList.add("enter");
     name.classList.add("enter");
     school.classList.add("enter");
     stars.classList.add("enter");
+
+    console.log("학교 마크 설정:", card.school_eng);
+console.log("마크 경로:", getSchoolMarkImagePath(card.school_eng));
 }
-
-
-
 
 
 // 카드 클릭 → 다음 카드 or 결과 페이지

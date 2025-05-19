@@ -34,17 +34,17 @@ body:has(#step-one-page.screen.active) { /* 첫 페이지에서 스크롤 */
     bottom: 1rem;
     right: 1rem;
     z-index: 1000;
-    background-color: rgba(0, 0, 0, 0.3);
+    background-color: rgba(0, 0, 0, 0.1);
     color: white;
     font-size: 1rem;
     border: none;
-    border-radius: 30%;
-    padding: 0.5rem 0.7rem;
+    border-radius: 50%;
+    padding: 0.5rem 0.5rem;
     cursor: pointer;
     transition: background-color 0.2s ease-in-out;
 }
 .sound-toggle:hover {
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: rgba(0, 0, 0, 0.6);
 }
 
 /* 청휘석 */
@@ -491,7 +491,7 @@ canvas.signing {
     flex-direction: column;
 }
 .character-card {
-    width: 50vw;
+    width: 70vw;
     max-width: 280px;
     border-radius: 16px;
     object-fit: cover;
@@ -513,17 +513,36 @@ canvas.signing {
     animation: fade-in 0.6s ease forwards;
 }
 .character-name {
-    font-size: 1.6rem;
+    font-size: 2.0rem;
     font-weight: bold;
 }
 .character-school {
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     color: #888;
     margin: 0.4rem 0;
 }
 .character-stars {
-    font-size: 1.8rem;
-    color: gold;
+    font-size: 2.5rem;
+}
+
+/* 학원 마크 배경 */
+#school-mark-background {
+    position: absolute;
+    top: 70%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    height: 400px;
+    opacity: 0.1;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    z-index: 1;
+}
+#character-image,
+#character-info {
+    position: relative;
+    z-index: 2;
 }
 
 @keyframes slide-in-right {
