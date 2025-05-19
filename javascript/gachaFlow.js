@@ -111,16 +111,19 @@ function showNextCharacter() {
     const infoContainer = document.getElementById("character-info");
     const schoolMark = document.getElementById("school-mark-background");
 
-    // 학원 마크 배경 이미지 설정
-    if (schoolMark && card.school_eng) {
-        schoolMark.style.backgroundImage = `url('${getSchoolMarkImagePath(card.school_eng)}')`;
-    }
+    // 학원 마크와 텍스트, 애니메이션 모두 로딩 이후에 처리
+    img.onload = () => {
+        // 마크 먼저 교체
+        if (schoolMark && card.school_eng) {
+            schoolMark.style.backgroundImage = `url('${getSchoolMarkImagePath(card.school_eng)}')`;
+        }
 
-    name.textContent = card.name;
-    school.textContent = card.school;
-    stars.innerHTML = "⭐".repeat(Number(card.rarity));
+        // 텍스트 정보 설정
+        name.textContent = card.name;
+        school.textContent = card.school;
+        stars.innerHTML = "⭐".repeat(Number(card.rarity));
 
-    img.onload = () => { // 이미지가 완전히 로드된 이후에 애니메이션 적용
+        // 모든 요소 애니메이션 초기화
         img.classList.remove("enter");
         infoContainer.classList.remove("enter");
         name.classList.remove("enter");
@@ -129,6 +132,7 @@ function showNextCharacter() {
 
         void img.offsetWidth;
 
+        // 애니메이션 적용
         img.classList.add("enter");
         infoContainer.classList.add("enter");
         name.classList.add("enter");
@@ -136,8 +140,10 @@ function showNextCharacter() {
         stars.classList.add("enter");
     };
 
+    // 마지막에 이미지 소스 설정 (→ 로딩 후 위 onload 실행됨)
     img.src = `images/characters/${card.rarity}/${card.image}`;
 }
+
 
 // 카드 클릭 → 다음 카드 or 결과 페이지
 document.getElementById("step-four-page").addEventListener("click", () => {
