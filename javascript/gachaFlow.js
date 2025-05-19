@@ -111,33 +111,33 @@ function showNextCharacter() {
     const infoContainer = document.getElementById("character-info");
     const schoolMark = document.getElementById("school-mark-background");
 
-    img.src = `images/characters/${card.rarity}/${card.image}`; // 캐릭터 이미지 및 정보 설정
+    // 학원 마크 배경 이미지 설정
+    if (schoolMark && card.school_eng) {
+        schoolMark.style.backgroundImage = `url('${getSchoolMarkImagePath(card.school_eng)}')`;
+    }
+
     name.textContent = card.name;
     school.textContent = card.school;
     stars.innerHTML = "⭐".repeat(Number(card.rarity));
 
-    if (schoolMark && card.school_eng) { // 학원 마크 배경 이미지 설정
-        schoolMark.style.backgroundImage = `url('${getSchoolMarkImagePath(card.school_eng)}')`;
-    }
+    img.onload = () => { // 이미지가 완전히 로드된 이후에 애니메이션 적용
+        img.classList.remove("enter");
+        infoContainer.classList.remove("enter");
+        name.classList.remove("enter");
+        school.classList.remove("enter");
+        stars.classList.remove("enter");
 
-    img.classList.remove("enter");
-    infoContainer.classList.remove("enter");
-    name.classList.remove("enter");
-    school.classList.remove("enter");
-    stars.classList.remove("enter");
+        void img.offsetWidth;
 
-    void img.offsetWidth;
+        img.classList.add("enter");
+        infoContainer.classList.add("enter");
+        name.classList.add("enter");
+        school.classList.add("enter");
+        stars.classList.add("enter");
+    };
 
-    img.classList.add("enter");
-    infoContainer.classList.add("enter");
-    name.classList.add("enter");
-    school.classList.add("enter");
-    stars.classList.add("enter");
-
-    console.log("학교 마크 설정:", card.school_eng);
-console.log("마크 경로:", getSchoolMarkImagePath(card.school_eng));
+    img.src = `images/characters/${card.rarity}/${card.image}`;
 }
-
 
 // 카드 클릭 → 다음 카드 or 결과 페이지
 document.getElementById("step-four-page").addEventListener("click", () => {
@@ -147,14 +147,10 @@ document.getElementById("step-four-page").addEventListener("click", () => {
         showNextCharacter();
     }
     else if (currentIndex === gachaResults.length) {
-        // ✅ 여기에서 결과 요약 표 먼저 만들고
-        buildResultSummaryTable();
-
-        // ✅ 결과 페이지로 전환
+        buildResultSummaryTable(); // 결과 테이블 생성
         changeScreen("step-five-page");
     }
 });
-
 
 // 폭죽 효과 생성 함수 (중복 제거 위해 여기에 있음)
 function launchFireworks() {
@@ -230,11 +226,6 @@ function buildResultSummaryTable() {
     html += `</tbody></table>`;
     container.innerHTML = html;
 }
-
-
-
-
-
 
 // 처음으로 버튼
 document.getElementById("home-button").addEventListener("click", () => {
