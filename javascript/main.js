@@ -113,10 +113,10 @@ window.addEventListener("DOMContentLoaded", () => {
         });
 
         setTimeout(() => {
-            pyroxeneUsed += 1200;        // ✅ 사용량 누적
-            updatePyroxeneDisplay();     // ✅ UI 업데이트
+            pyroxeneUsed += 1200;
+            updatePyroxeneDisplay();
             changeScreen("step-four-page");
-            startCharacterReveal(lastGachaResult); // 10장의 결과 전달
+            startCharacterReveal(lastGachaResult);
         }, 500);
     });
 });

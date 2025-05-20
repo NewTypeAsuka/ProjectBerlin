@@ -165,7 +165,7 @@ body:has(#step-one-page.screen.active) { /* 첫 페이지에서 스크롤 */
     font-weight: bolder;
     color: #333;
 }
-#signCanvas {
+.signCanvas {
     width: 300px;
     height: 300px;
     border: 2px solid #ccc;
@@ -175,7 +175,7 @@ body:has(#step-one-page.screen.active) { /* 첫 페이지에서 스크롤 */
     cursor: crosshair;
     margin-bottom: 30px;
 }
-canvas.signing {
+.signCanvas.signing {
     background-color: #ffe6f0 !important;
     transition: background-color 0.3s ease;
 }
@@ -332,7 +332,7 @@ canvas.signing {
 }
 @media (min-width: 1024px) {
     .touch-guide {
-        font-size: 3.0rem;
+        font-size: 4.0rem;
     }
 }
 
@@ -483,6 +483,43 @@ canvas.signing {
 
 /* 4. 캐릭터 소개 페이지 ///////////////////////////////// */
 
+/* 3성 캐릭터 카드 별 떨어지기 */
+.star-container {
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    pointer-events: none;
+    display: flex;
+    gap: 24px;
+    justify-content: center;
+    align-items: center;
+}
+.star {
+    font-size: 120px;
+    color: gold;
+    opacity: 0;
+    animation: star-drop 1s ease-out forwards;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
+}
+.star:nth-child(1) { animation-delay: 0s; }
+.star:nth-child(2) { animation-delay: 0.2s; }
+.star:nth-child(3) { animation-delay: 0.4s; }
+@keyframes star-drop {
+    0% {
+        transform: translateY(-100px) scale(1.5);
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(100px) scale(1);
+        opacity: 0;
+    }
+}
+
 /* 캐릭터 소개 페이지 기본 */
 .character-card-container {
     position: relative;
@@ -505,6 +542,11 @@ canvas.signing {
 }
 .character-card.enter {
     animation: slide-in-right 0.6s cubic-bezier(0.15, 0.85, 0.4, 1.2) forwards;
+}
+@media (min-width: 768px) { /* 태블릿과 데스크탑에서는 사진 아래로 떨어짐 */
+    .character-card.enter {
+        animation: slide-in-down 0.6s cubic-bezier(0.15, 0.85, 0.4, 1.2) forwards;
+    }
 }
 .character-info {
     margin-top: 1rem;
@@ -549,6 +591,7 @@ canvas.signing {
     z-index: 2;
 }
 
+/* 캐릭터 이미지 애니메이션 */
 @keyframes slide-in-right {
     0% {
         transform: translateX(120vw) scale(0.95);
@@ -560,6 +603,20 @@ canvas.signing {
     }
     100% {
         transform: translateX(0) scale(1);
+        opacity: 1;
+    }
+}
+@keyframes slide-in-down {
+    0% {
+        transform: translateY(-120vh) scale(0.95);
+        opacity: 0;
+    }
+    80% {
+        transform: translateY(0vh) scale(1.05);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(0) scale(1);
         opacity: 1;
     }
 }

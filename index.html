@@ -45,7 +45,6 @@
     <!-- 청휘석 표시 -->
     <div id="pyroxene-used" class="pyroxene-used">사용 💎 0</div>
 
-
     <!-- 1. 가챠 인트로 페이지 -->
     <section id="step-one-page" class="screen active">
         <div class="intro-container">
@@ -70,7 +69,7 @@
     <section id="step-two-page" class="screen">
         <div class="sign-container">
             <p class="sign-instruction">✍️ 결재해주세요 ✍️</p>
-            <canvas id="signCanvas"></canvas>
+            <canvas id="signCanvas" class="signCanvas"></canvas>
             <img src="images/common/Arona2.png" alt="Arona2" class="arona-full-image" />
             <div id="fireworks-container" class="fireworks hidden"></div>
         </div>
@@ -98,6 +97,11 @@
                 <div class="character-school" id="character-school">학원명</div>
                 <div class="character-stars" id="character-stars">성급</div>
             </div>
+        </div>
+        <div class="star-container" id="star-drop" style="display: none;">
+            <div class="star star1">⭐</div>
+            <div class="star star2">⭐</div>
+            <div class="star star3">⭐</div>
         </div>
         <div class="fireworks hidden"></div>
     </section>

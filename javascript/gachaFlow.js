@@ -110,20 +110,30 @@ function showNextCharacter() {
     const stars = document.getElementById("character-stars");
     const infoContainer = document.getElementById("character-info");
     const schoolMark = document.getElementById("school-mark-background");
+    const starDrop = document.getElementById("star-drop");
 
-    // 학원 마크와 텍스트, 애니메이션 모두 로딩 이후에 처리
+    // 초기화
+    img.style.display = "none";
+    img.style.opacity = 0;
+    infoContainer.style.opacity = 0;
+    name.textContent = "";
+    school.textContent = "";
+    stars.innerHTML = "";
+
+    // 캐릭터 이미지 로드 후 처리
     img.onload = () => {
-        // 마크 먼저 교체
+        // 학원 마크 설정
         if (schoolMark && card.school_eng) {
             schoolMark.style.backgroundImage = `url('${getSchoolMarkImagePath(card.school_eng)}')`;
         }
 
-        // 텍스트 정보 설정
+        // 정보 설정
         name.textContent = card.name;
         school.textContent = card.school;
         stars.innerHTML = "⭐".repeat(Number(card.rarity));
 
-        // 모든 요소 애니메이션 초기화
+        // 애니메이션 초기화
+        img.style.display = "block";
         img.classList.remove("enter");
         infoContainer.classList.remove("enter");
         name.classList.remove("enter");
@@ -132,7 +142,9 @@ function showNextCharacter() {
 
         void img.offsetWidth;
 
-        // 애니메이션 적용
+        // 표시 + 애니메이션 적용
+        img.style.opacity = 1;
+        infoContainer.style.opacity = 1;
         img.classList.add("enter");
         infoContainer.classList.add("enter");
         name.classList.add("enter");
@@ -140,10 +152,23 @@ function showNextCharacter() {
         stars.classList.add("enter");
     };
 
-    // 마지막에 이미지 소스 설정 (→ 로딩 후 위 onload 실행됨)
-    img.src = `images/characters/${card.rarity}/${card.image}`;
-}
+    // 이미지 경로 미리 준비
+    const imageSrc = `images/characters/${card.rarity}/${card.image}`;
 
+    // 3성이라면 별 떨어진 뒤 이미지 로드 시작
+    if (card.rarity === "3") {
+        starDrop.style.display = "flex";
+        const audio = new Audio("sounds/pon.mp3");
+        audio.play();
+
+        setTimeout(() => {
+            starDrop.style.display = "none";
+            img.src = imageSrc;
+        }, 1500);
+    } else {
+        img.src = imageSrc;
+    }  
+}
 
 // 카드 클릭 → 다음 카드 or 결과 페이지
 document.getElementById("step-four-page").addEventListener("click", () => {
