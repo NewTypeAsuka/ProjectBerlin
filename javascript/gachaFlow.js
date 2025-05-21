@@ -99,6 +99,34 @@ function getSchoolMarkImagePath(school_eng) {
     return `images/school/mark/${school_eng}_mark.png`;
 }
 
+// 3성일 경우 무수한 별 떨어뜨리기
+function spawnStarParticles(count = 40) {
+    const container = document.getElementById("star-drop-area");
+
+    for (let i = 0; i < count; i++) {
+        const star = document.createElement("div");
+        star.className = "star-particle";
+        star.textContent = "⭐";
+
+        // 랜덤 위치 및 지연
+        const randomLeft = Math.random() * 100; // vw%
+        const randomFontSize = 16 + Math.random() * 24; // 16px ~ 40px
+        const randomDelay = Math.random() * 0.5; // 최대 0.5초 지연
+
+        star.style.left = `${randomLeft}vw`;
+        star.style.top = `0px`;
+        star.style.fontSize = `${randomFontSize}px`;
+        star.style.animationDelay = `${randomDelay}s`;
+
+        container.appendChild(star);
+
+        // 애니메이션 끝난 후 제거
+        setTimeout(() => {
+            star.remove();
+        }, 1500);
+    }
+}
+
 // 개별 캐릭터 카드 등장 처리
 function showNextCharacter() {
     const card = gachaResults[currentIndex];
@@ -114,6 +142,7 @@ function showNextCharacter() {
 
     // 초기화
     img.style.display = "none";
+    schoolMark.style.display = "none";
     img.style.opacity = 0;
     infoContainer.style.opacity = 0;
     name.textContent = "";
@@ -134,6 +163,7 @@ function showNextCharacter() {
 
         // 애니메이션 초기화
         img.style.display = "block";
+        schoolMark.style.display = "block";
         img.classList.remove("enter");
         infoContainer.classList.remove("enter");
         name.classList.remove("enter");
@@ -157,6 +187,7 @@ function showNextCharacter() {
 
     // 3성이라면 별 떨어진 뒤 이미지 로드 시작
     if (card.rarity === "3") {
+        schoolMark.style.display = "none";
         starDrop.style.display = "flex";
         const audio = new Audio("sounds/pon.mp3");
         audio.play();
